@@ -1,0 +1,80 @@
+===================
+Step 2: Model Creation & Training - See modeltraining.py 
+===================
+
+2.1 Model Definition (`createModel` function):
+----------------------------------------------
+    - Designing the architecture of the LSTM neural network.
+        -LSTM -> type of Reoccuring Neural Network architecture, which recognizes patterns in reoccuring sets of data, which we are using for stock prices
+        -Neural Networks -> Series of algorithms that tries to recognize relationships in data, similar to a human brain, so that they can potentially predict data
+    - The function takes an input shape and returns a sequential model.
+        -Input Shape -> Structure of the input data. 
+            Here the input shape is (90, 1) because we are using data from the previous 90 days, and we are only interested in the closing price
+        -Sequential Model -> In Keras, sequential model (sequentially adding layers) is appropriate for plain stack of layers where each layer has exactly one input and one output tersor
+        -Layer -> Layers in Neural Networks are a collection of neurons/nodes operating together to transform input data with parameters learned from training
+            Here we used 4 layers, 1st LSTM to process raw sequence of stock data, two LSTM layers to abstract and refine features, and finally dense layer to make predictions
+        -Dense Layer -> Type of layer where every neuron receives input from every element of previous layer 
+        -Dropout Layers -> Are randomly removed to prevent overfitting
+
+- Machine Learning Implications:
+    - The structure of the model impacts its ability to recognize patterns in data.
+    - Layered LSTMs help in capturing long-term dependencies in time series data.
+    - Dropout layers help prevent overfitting by randomly setting a fraction of inputs to 0 at each update during training.
+
+2.2 Model Compilation:
+-----------------------
+    - Finalizing the model by specifying the optimizer and loss function.
+    - Uses the Adam optimizer and Mean Squared Error (MSE) as the loss function.
+        -Adam Optimizer -> Optimization Algorithm that computes adaptive learning rates for each parameter. Stands for Adaptive Moment Estimation, and we use it b/c it is efficient
+        -Mean Squared Error -> Calculates the average of the squared differences between predicted values and target values, and it's used to train the model to notice large discrepancies
+        -Epoch -> An epoch is a single forward and backwards pass of all the learning data. We use 100 epoches to not overfit or underfit the data
+        -Batch Size -> Batch Size Refers to the number of training examples utilized in one iteration, and batch size of 6 means the model will update it's parameters every 6 training samples
+        -Verbose -> This just shows the progress bar
+
+- Machine Learning Implications:
+    - The optimizer affects how the model updates its weights based on the loss.
+    - MSE is commonly used for regression tasks as it measures the average squared difference between the actual values and the predictions.
+
+2.3 Model Instantiation:
+-------------------------
+    -Loss -> Function that measures the difference between the predicted output and the actual target values. Quantifies how well or poorly the model's prediction matches true values
+    - Creating an instance of the LSTM model by calling the `createModel` function with the shape of the `xTrain` data.
+
+2.4 Data Inspection:
+---------------------
+    - Printing the type and shape of training and testing datasets.
+    
+- Machine Learning Implications:
+    - Useful for debugging and ensuring data is correctly formatted for the model.
+
+2.5 Model Training:
+--------------------
+    - Using the `fit` method to train the model on the training dataset.
+    - Specifies validation data, number of epochs, and batch size.
+
+- Machine Learning Implications:
+    - Training allows the model to adjust its weights to minimize the specified loss function.
+    - Validation data provides a measure of model performance on unseen data during training.
+
+2.6 Model Evaluation:
+----------------------
+    - Assessing the performance of the trained model on the test dataset using the `evaluate` method.
+
+- Machine Learning Implications:
+    - Provides a measure of how well the model will perform on new, unseen data.
+    - Helps in identifying overfitting if the model's performance on the test data is significantly worse than on the training data.
+
+2.7 Prediction:
+----------------
+    - Using the trained model to predict the next day's closing price using the last sequence from the `xTest` dataset.
+
+- Machine Learning Implications:
+    - Demonstrates the model's ability to make future predictions based on historical data.
+
+2.8 Model Saving:
+------------------
+    - Storing the trained model in an `.h5` file format for future use.
+
+- Machine Learning Implications:
+    - Saving the model allows for its deployment in applications without needing to retrain.
+    - Enables further fine-tuning or transfer learning in the future.
