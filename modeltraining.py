@@ -1,59 +1,61 @@
 import tensorflow as tf
-from tensorflow import keras
-
 from keras.models import Sequential
 from keras.layers import LSTM, Dense, Dropout
-
-from datacollection import xTrain, yTrain, xTest, yTest
-
-
-#2.1 - Defining the Model 
+import joblib
+from sklearn.preprocessing import MinMaxScaler
 
 
-def createModel(inputShape):
+
+
+# 2.1 - Defining the Model
+def create_model(input_shape):
     model = Sequential()
 
-    #Input Layer
-    model.add(LSTM(units=50, return_sequences=True, input_shape=inputShape))
+    # Input Layer
+    model.add(LSTM(units=50, return_sequences=True, input_shape=input_shape))
     model.add(Dropout(0.2))
 
-    #Adding second LSTM layer and dropout
+    # Adding second LSTM layer and dropout
     model.add(LSTM(units=50, return_sequences=True))
     model.add(Dropout(0.2))
 
-    #Adding a third LSTM Layer and dropout
+    # Adding a third LSTM Layer and dropout
     model.add(LSTM(units=50))
     model.add(Dropout(0.2))
 
-    #Output Layer
+    # Output Layer
     model.add(Dense(units=1))
 
-    #CompileModel
+    # Compile Model
     model.compile(optimizer='adam', loss='mean_squared_error')
 
     return model
-#2.3 Model Instantiation
-model = createModel(xTrain[0].shape)
 
-#2.4 Data Inspection
-print("xTrain:", type(xTrain), xTrain.shape)
-print("yTrain:", type(yTrain), yTrain.shape)
-print("xTest:", type(xTest), xTest.shape)
-print("yTest:", type(yTest), yTest.shape)
+def train_model(x_train, y_train, x_test, y_test, ticker, epochs=100, batch_size=6, verbose=1):
+    """
+    Train a new LSTM model on the provided data.
+    """
+    model = create_model(x_train[0].shape)
+    
+    # Training the Model#
+    history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=epochs, batch_size=batch_size, verbose=verbose)
+
+    # Model Evaluation
+    loss = model.evaluate(x_test, y_test, verbose=verbose)
+    print(f'Validation Loss: {loss}')
+
+    # Save the Model
+    model.save(f'lstm_{ticker}.model.keras')
+    
+    #return model_path
 
 
-#2.5 Training the Model
-history = model.fit(xTrain, yTrain, validation_data=(xTest, yTest), epochs=100, batch_size=6, verbose=1)
+def predict_next_day(model, x_test):
+    """
+    Predict the next day's closing price using the last sequence from x_test.
+    """
+    last_sequence = x_test[-1].reshape(1, -1, 1)
+    predicted_price = model.predict(last_sequence)
+    
+    return predicted_price[0][0]
 
-#2.6 Model Evaluation
-loss = model.evaluate(xTest, yTest, verbose=1)
-print(f'Validation Loss: {loss}')
-
-# 2.7 Predicting the Next Day's Closing Price
-last_sequence = xTest[-1].reshape(1, -1, 1)
-predicted_price = model.predict(last_sequence)
-print(f"Predicted next day's closing price: {predicted_price[0][0]}")
-
-# 2.8 Save the Model
-#model.save("lstm_model.h5")
-model.save("lstm.model.keras")
