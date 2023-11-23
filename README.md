@@ -13,6 +13,7 @@ Go to the app.css directory, and open cmd. Type npm start to start the node appl
 - Step 3.
 
 Make sure that the model for the stock you want is already created (ex. lstm_AAPL.model.keras). If not, please create it using train_model_script.py
+
 https://github.com/Douhwe/AI-Trading-Prediction-Bot/assets/122418975/2fc3bfd3-f166-4da7-bfc3-8d02e4aa886e
 
 - Step 4.
