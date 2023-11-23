@@ -19,7 +19,7 @@ https://github.com/Douhwe/AI-Trading-Prediction-Bot/assets/122418975/2fc3bfd3-f1
 
 Play around with the node application to help predict the stock prices for the stock that you want
 
-https://github.com/Douhwe/AI-Trading-Prediction-Bot/assets/122418975/7e40e7a9-0571-4a4e-8779-dbb209e0112f
+https://github.com/Douhwe/AI-Trading-Prediction-Bot/assets/122418975/fb4dd295-416d-4cbc-bea9-2bc19a9b63f6
 
 
 
