@@ -1,0 +1,73 @@
+/* Base styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f6f8fa;
+    margin: 0;
+    padding: 0;
+}
+
+.App { /*Title*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 140vh;
+    color: #333;
+}
+
+/* Header styling */
+h1 {
+    border-bottom: 2px solid #61dafb;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+}
+
+h2 {
+    margin-top: 30px;
+    font-size: 2em;
+    width: 100%; /* This will make h2 elements take the full width of their parent container */
+    max-width: 1600px; /* Adjust this value as needed */
+    padding: 0 20px; /* Add padding on both sides */
+    text-align: center; /* Optional: Aligns the text to the center */
+    box-sizing: border-box; /* Ensures padding is included in the width */
+}
+
+/* Form and input styling */
+select, button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    outline: none;
+    transition: border .3s;
+}
+
+select:focus, button:focus {
+    border-color: #61dafb;
+}
+
+button {
+    background-color: #61dafb;
+    color: white;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+button:hover {
+    background-color: #4a9ec9;
+}
+
+/* Prediction styling */
+div {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+    width: 200%; /* Adjust as needed, or set a max-width */
+    padding: 20px;
+}

@@ -133,36 +133,6 @@ def collect_data(ticker):
         print(f"An error occurred: {str(e)}")
         return jsonify({"message": f"An error occurred: {str(e)}"}), 500
 
-# @app.route('/collect_data/<string:ticker>', methods=['POST'])
-# def collect_data(ticker):
-#     try:
-#         data_and_scaler = fetch_and_preprocess_data(ticker)
-#         if data_and_scaler is None:
-#             return jsonify({"message": "Failed to fetch and preprocess data."}), 500
-#         data, scaler = data_and_scaler  # Getting both data and scaler #
-
-#         for record in data.itertuples():
-#             # Check if record already exists in the database
-#             existing_stock = Stock.query.filter_by(ticker=ticker, date=record.Index).first()
-
-#             if existing_stock:
-#                 # Update the existing record if needed
-#                 existing_stock.close = record.Close
-#             else:
-#                 # Add a new record if it doesn't exist
-#                 stock = Stock(ticker=ticker, date=record.Index, close=record.Close)
-#                 db.session.add(stock)
-
-#         db.session.commit()
-
-#         # Save the scaler to disk#
-#         scaler_filename = f"scalers/{ticker}_scaler.save"
-#         dump(scaler, scaler_filename)
-
-#         return jsonify({"message": f"Data for {ticker} collected and updated successfully!"})
-#     except Exception as e:
-#         return jsonify({"message": f"An error occurred: {str(e)}"}), 500
-
 #3.8 Training Model
 @app.route('/train_model/<string:ticker>', methods=['POST'])
 def train(ticker):
