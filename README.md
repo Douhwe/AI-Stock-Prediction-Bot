@@ -12,10 +12,15 @@ Go into app.py directory, and open cmd. Then type python app.py to start the fla
 
 Make sure that the model for the stock you want is already created (ex. lstm_AAPL.model.keras). If not, please create it using train_model_script.py
 
-https://github.com/Douhwe/AI-Trading-Prediction-Bot/assets/122418975/2fc3bfd3-f166-4da7-bfc3-8d02e4aa886e
+
+https://github.com/Douhwe/AI-Stock-Prediction-Bot/assets/122418975/5529cc4b-8087-4945-bf95-5795ad85ea0a
 
 
 ## Step 4.
+
+
+
+
 
 Go to the src directory, and open cmd. Type npm start to start the node application
 
@@ -24,7 +29,10 @@ Go to the src directory, and open cmd. Type npm start to start the node applicat
 
 Play around with the node application to help predict the stock prices for the stock that you want
 
-https://github.com/Douhwe/AI-Trading-Prediction-Bot/assets/122418975/2d558586-b140-474f-99b8-1a67d10bb227
+https://github.com/Douhwe/AI-Stock-Prediction-Bot/assets/122418975/ba774a7f-0ebe-48da-956b-6e66af00d1cb
+
+
+
 
 
 
