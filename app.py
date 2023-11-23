@@ -66,42 +66,59 @@ def add_stock():
 def get_stock_by_ticker(ticker):
     print(f"Entered get_stock_by_ticker with ticker: {ticker}")
 
+    # Fetching data from the database
     stocks = Stock.query.filter_by(ticker=ticker).all()
     if not stocks:
         return jsonify({"message": "Stock not found"}), 404
 
-    response = []
+    db_response = []
     for stock in stocks:
-        response.append({
+        db_response.append({
             "id": stock.id,
             "ticker": stock.ticker,
             "date": stock.date.strftime('%Y-%m-%d'),
             "closing_price": stock.closing_price
         })
 
-    return jsonify(response)
+    # Fetching the original, unscaled data
+    try:
+        _, _, original_data = fetch_and_preprocess_data(ticker)
+        original_data_json = original_data.to_dict(orient='records')
+    except Exception as e:
+        print(f"Error fetching original data: {str(e)}")
+        return jsonify({"message": f"Error fetching original data for {ticker}"}), 500
+
+    # Combine both responses
+    combined_response = {
+        "databaseData": db_response,
+        "originalData": original_data_json
+    }
+
+    return jsonify(combined_response)
 
 #3.7 Collect and Preprocess Data
 @app.route('/collect_data/<string:ticker>', methods=['POST'])
 def collect_data(ticker):
     print("Entered collect_data function")
     try:
-        data_and_scaler = fetch_and_preprocess_data(ticker)
-        if data_and_scaler is None:
+        # Unpack the values returned from fetch_and_preprocess_data function
+        data, scaler, _ = fetch_and_preprocess_data(ticker)
+
+        if data is None:
             print("Failed to fetch and preprocess data.")
             return jsonify({"message": "Failed to fetch and preprocess data."}), 500
 
-        data, scaler = data_and_scaler
-
         print(f"Fetched and preprocessed {len(data)} records.")
-        
+
         for record in data.itertuples():
-            existing_stock = Stock.query.filter_by(ticker=ticker, date=record.Index).first()
+            existing_stock = Stock.query.filter_by(ticker=ticker, date=record.Date).first()
             if existing_stock:
-                print(f"Updating record for date: {record.Index}")
+                print(f"Updating record for date: {record.Date}")
+                # Update the existing record if needed
+                existing_stock.closing_price = record.Close
             else:
-                print(f"Adding new record for date: {record.Index}")
-                stock = Stock(ticker=ticker, date=record.Index, closing_price=record.Close)
+                print(f"Adding new record for date: {record.Date}")
+                stock = Stock(ticker=ticker, date=record.Date, closing_price=record.Close)
                 db.session.add(stock)
 
         db.session.commit()

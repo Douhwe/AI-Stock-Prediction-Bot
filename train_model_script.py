@@ -10,7 +10,7 @@ if __name__ == "__main__":
         collect_data(ticker)
 
     
-    tickerDf, scaler = fetch_and_preprocess_data(ticker)
+    tickerDf, scaler, originalData = fetch_and_preprocess_data(ticker)
     
     if tickerDf is None:
         print(f"Error fetching and preprocessing data for ticker: {ticker}. Exiting...")
