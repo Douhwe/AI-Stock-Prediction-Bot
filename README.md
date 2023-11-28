@@ -36,6 +36,3 @@ https://github.com/Douhwe/AI-Stock-Prediction-Bot/assets/122418975/ba774a7f-0ebe
 
 
 
-
-
-
